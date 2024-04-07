@@ -1,0 +1,73 @@
+rodzic(ojciec,syn).
+rodzic(matka,syn).
+rodzic(ojciec,corka).
+rodzic(matka,corka).
+mezczyzna(syn).
+mezczyzna(ojciec).
+kobieta(X):-
+    \+mezczyzna(X).
+ojciec(X,Y):-
+    rodzic(X,Y),mezczyzna(X).
+matka(X,Y):-
+    rodzic(X,Y),kobieta(X).
+corka(X,Y):-
+    kobieta(X),rodzic(Y,X).
+brat_rodzony(X,Y):-
+    X\=Y,
+    mezczyzna(X),
+    matka(M,X),matka(M,Y),
+    ojciec(O,X),ojciec(O,Y).
+brat_przyrodni(X,Y):-
+    X\=Y,
+    \+brat_rodzony(X,Y),
+    mezczyzna(X),(   
+    matka(M,X),matka(M,Y);
+    ojciec(O,X),ojciec(O,Y)).
+siostra_rodzona(X,Y):-
+    X\=Y,
+    kobieta(X),
+    matka(M,X),matka(M,Y),
+    ojciec(O,X),ojciec(O,Y).
+siostra_przyrodnia(X,Y):-
+    X\=Y,
+    \+brat_rodzony(X,Y),
+    kobieta(X),(   
+    matka(M,X),matka(M,Y);
+    ojciec(O,X),ojciec(O,Y)).
+kuzyn(X,Y):-
+    rodzic(R1,X),
+    rodzic(R2,Y),
+    R1\=R2,
+    (brat_rodzony(R1,R2);brat_przyrodni(R1,R2);
+    siostra_rodzona(R1,R2);siostra_przyrodnia(R1,R2)).
+dziadek_od_strony_ojca(X,Y):-
+    ojciec(O,Y),
+    ojciec(X,O).
+dziadek_od_strony_matki(X,Y):-
+    matka(M,Y),
+    ojciec(X,M).
+dziadek(X,Y):-
+	rodizc(R,Y),
+	ojciec(X,R).
+babcia(X,Y):-
+	rodizc(R,Y),
+	matka(X,R).
+wnuczka(X,Y):-
+    dziadek(X,Y);babcia(X,Y).
+przodek_do_2_pokolenia_wstecz(X,Y):-
+    rodzic(X,Y);
+    (rodzic(X,C),rodzic(C,Y)).
+przodek_do_3_pokolenia_wstecz(X,Y):-
+     rodzic(X,Y);
+    (rodzic(X,C),rodzic(C,Y));
+    (rodzic(X,C),rodzic(C,D),rodzic(D,Y)).
+
+    
+
+
+
+    
+    
+
+    
+                
