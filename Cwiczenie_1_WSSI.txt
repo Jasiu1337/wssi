@@ -1,0 +1,114 @@
+lubi(ala,kot).
+lubi(kot,ala).
+
+lubi(jasiu,piwo).
+lubi(piwo,jasiu).
+
+chlop(jasiu).
+baba(piwo).
+
+przyjazn(X,Y) :-
+    lubi(X,Y),
+    lubi(Y,X).
+
+kocha(X,Y) :-
+    lubi(X,Y),
+    (chlop(X),baba(Y));
+    (chlop(Y),baba(X)).
+
+milosc(X,Y) :-
+	kocha(X,Y),
+	kocha(Y,X).
+
+niby_przyjazn(X,Y) :-
+    lubi(X,Y);
+    lubi(Y,X).
+
+nie_przyjazn(X,Y) :-
+    \+lubi(X,Y),
+    \+lubi(Y,X).
+
+rodzic(ojciec,syn).
+rodzic(matka,syn).
+rodzic(matka,syn2).
+rodzic(ojciec,syn2).
+
+rodzestwo(X,Y):-
+    rodzic(A,X),
+    rodzic(B,X),
+    rodzic(A,Y),
+    rodzic(B,Y),
+    A\=B.
+
+kuzynostwo(X,Y) :-
+    rodzic(A,X),
+    rodzic(B,Y),
+    rodzic(C,A),
+    rodzic(C,B).
+
+wspolny_wnuk(X,Y) :-
+    rodzic(A,C),
+    rodzic(B,C),
+    rodzic(X,A),
+    rodizc(Y,B).
+
+przyszywany_rodzic(X,Y) :-
+    rodzic(X,B),
+    rodzic(A,B),
+    rodzic(A,Y),
+    \+rodzic(X,Y).
+
+przyszywane_rodzestwo(X,Y) :-
+    rodzic(A,X),
+    rodzic(B,X),
+    rodzic(A,Y),
+    rodzic(C,Y),
+    C\=B,
+    C\=A.
+
+szwagier(X,Y) :-
+    rodzic(A,X),
+    rodizc(A,B),
+    rodzic(B,C),
+    rodzic(Y,C).
+
+dziwna_sprawa(X,Y) :-
+    rodzic(A,X),
+    rodzic(B,X),
+    A\=B,
+    rodzic(B,C),
+    rodzic(C,Y),
+    rodizc(A,Y).
+    
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
